@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 2 - Utilería JS</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body>
+
+    <main class="contenedor">
+        <h1>Utilería JS</h1>
+        <p>Formulario validado con funciones propias de JavaScript.</p>
+
+        <form>
+            <label for="nombre">Nombre completo:</label>
+            <input type="text" id="nombre" placeholder="Ejemplo: Ana Pérez">
+
+            <label for="correo">Correo electrónico:</label>
+            <input type="text" id="correo" placeholder="ejemplo@correo.com">
+
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" placeholder="10 dígitos">
+
+            <label for="fecha">Fecha de nacimiento:</label>
+            <input type="date" id="fecha">
+
+            <button type="button" onclick="validarFormulario()">Validar formulario</button>
+        </form>
+
+        <p id="mensaje"></p>
+
+        <p class="enlace">
+            <a href="login.html">Ir al login</a>
+        </p>
+    </main>
+
+    <div id="modalEdad" class="modal">
+        <div class="modal-contenido">
+            <h2>Edad calculada</h2>
+            <p id="resultadoEdad"></p>
+            <button onclick="cerrarModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="js/utileria.js"></script>
+
+    <script>
+        function validarFormulario() {
+            let nombre = document.getElementById("nombre").value;
+            let correo = document.getElementById("correo").value;
+            let telefono = document.getElementById("telefono").value;
+            let fecha = document.getElementById("fecha").value;
+            let mensaje = document.getElementById("mensaje");
+
+            nombre = limpiarEspacios(nombre);
+
+            if (nombre === "" || correo === "" || telefono === "" || fecha === "") {
+                mensaje.textContent = "Todos los campos son obligatorios.";
+                mensaje.style.color = "red";
+                return;
+            }
+
+            if (!soloLetras(nombre)) {
+                mensaje.textContent = "El nombre solo debe contener letras.";
+                mensaje.style.color = "red";
+                return;
+            }
+
+            if (!validarCorreo(correo)) {
+                mensaje.textContent = "El correo no tiene un formato válido.";
+                mensaje.style.color = "red";
+                return;
+            }
+
+            if (!validarLongitud(telefono, 10) || telefono.length !== 10) {
+                mensaje.textContent = "El teléfono debe contener exactamente 10 números.";
+                mensaje.style.color = "red";
+                return;
+            }
+
+            let edad = calcularEdad(fecha);
+
+            mensaje.textContent = "Formulario validado correctamente.";
+            mensaje.style.color = "green";
+
+            document.getElementById("resultadoEdad").textContent =
+                "La edad calculada es: " + edad + " años. " +
+                (esMayorDeEdad(fecha) ? "Es mayor de edad." : "No es mayor de edad.");
+
+            document.getElementById("modalEdad").style.display = "flex";
+
+            console.log("Nombre limpio:", nombre);
+            console.log("Nombre en formato título:", convertirTitulo(nombre));
+            console.log("Correo válido:", validarCorreo(correo));
+            console.log("Teléfono válido:", validarLongitud(telefono, 10));
+            console.log("Edad calculada:", edad);
+            console.log("Mayor de edad:", esMayorDeEdad(fecha));
+        }
+
+        function cerrarModal() {
+            document.getElementById("modalEdad").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Utilería JS</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body>
+
+    <main class="contenedor">
+        <h1>Login</h1>
+        <p>Validación de correo y contraseña usando utilería JS.</p>
+
+        <form>
+            <label for="correoLogin">Correo electrónico:</label>
+            <input type="text" id="correoLogin" placeholder="usuario@correo.com">
+
+            <label for="passwordLogin">Contraseña:</label>
+            <input type="password" id="passwordLogin" placeholder="Ejemplo: Hola123!">
+
+            <button type="button" onclick="validarLogin()">Ingresar</button>
+        </form>
+
+        <p id="mensajeLogin"></p>
+
+        <p class="enlace">
+            <a href="index.html">Regresar al formulario</a>
+        </p>
+    </main>
+
+    <script src="js/utileria.js"></script>
+
+    <script>
+        function validarLogin() {
+            let correo = document.getElementById("correoLogin").value;
+            let password = document.getElementById("passwordLogin").value;
+            let mensaje = document.getElementById("mensajeLogin");
+
+            if (correo === "" || password === "") {
+                mensaje.textContent = "Debes llenar todos los campos.";
+                mensaje.style.color = "red";
+                return;
+            }
+
+            if (!validarCorreo(correo)) {
+                mensaje.textContent = "El correo no es válido.";
+                mensaje.style.color = "red";
+                return;
+            }
+
+            if (!validarPassword(password)) {
+                mensaje.textContent = "La contraseña debe tener mínimo 8 caracteres, mayúscula, minúscula, número y carácter especial.";
+                mensaje.style.color = "red";
+                return;
+            }
+
+            mensaje.textContent = "Login validado correctamente.";
+            mensaje.style.color = "green";
+
+            console.log("Correo ingresado:", correo);
+            console.log("Correo válido:", validarCorreo(correo));
+            console.log("Contraseña válida:", validarPassword(password));
+        }
+    </script>
+
+</body>
+</html>
